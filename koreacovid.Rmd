@@ -29,6 +29,12 @@ $H_O$: Dying is not dependent of sex.
 $H_A$: Dying is dependent of sex.  
 
 
+## Methods
+
+Both sex and Sex variables are categorical, so it is a cat~cat.  
+the chi-squared and the fisher exact test will be used.  
+
+
 
 Table of patients:
 ```{r}
@@ -39,24 +45,42 @@ with(kRdata, table(Sex, result))
 
 ```
 
+From this table, more females are alive then males, and the number of dead males is greater than that of dead females.  
+
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
 
-`
 
+```{r}
+barchartGC(~sex + Sex,data=kRdata)
+barchartGC(~sex + Sex,data=kRdata, type="percent")
+
+```
+
+Based on this plot, the frequency of female is greater than that of the males.    
   
-
-
-
-
-
   
 ## Numerical results
 
 
+```{r}
+table1 <- xtabs(~sex + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+From the numerical results, there is no difference as the number of male is equal to the number of females.   
+
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
 
+from the table above, the P-value is0.0000000000000002, so we reject the null hypothesis by saying that, dying is dependent of sex.  
 
 ## Conclusions
 
+The question was if dying is depend of sex?  
+so, we conclude that yes, dying is dependent of sex.
