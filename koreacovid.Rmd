@@ -31,7 +31,7 @@ $H_A$: Dying is dependent of sex.
 
 ## Methods
 
-Both sex and Sex variables are categorical, so it is a cat~cat.  
+Both Sex and result variables are categorical, so it is a cat~cat.  
 the chi-squared and the fisher exact test will be used.  
 
 
@@ -45,29 +45,29 @@ with(kRdata, table(Sex, result))
 
 ```
 
-From this table, more females are alive then males, and the number of dead males is greater than that of dead females.  
+From this table, more females are alive then males, and the number of dead males is greater than that of dead females.    
 
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
 
 
 ```{r}
-barchartGC(~sex + Sex,data=kRdata)
-barchartGC(~sex + Sex,data=kRdata, type="percent")
+barchartGC(~Sex + result,data=kRdata)
+barchartGC(~Sex + result,data=kRdata, type="percent")
 
 ```
 
-Based on this plot, the frequency of female is greater than that of the males.    
+Based on this plot, the frequency of female alive is greater than that of the males alive, and the frequency of dead males is greater than that of females alive.      
   
   
 ## Numerical results
 
 
 ```{r}
-table1 <- xtabs(~sex + Sex, data=kRdata)
+table1 <- xtabs(~Sex + result, data=kRdata)
 rowPerc(table1)
 colPerc(table1)
 ```
-From the numerical results, there is no difference as the number of male is equal to the number of females.   
+From the numerical results, the number of dead males 3.0, and the number of dead females is 1.4. This implies that the number of dead males is greater then the number of dead females.    
 
 ## Inferential results 
 
@@ -78,9 +78,9 @@ fisher.test(table1)
 ```
 
 
-from the table above, the P-value is0.0000000000000002, so we reject the null hypothesis by saying that, dying is dependent of sex.  
+from the table above, the P-value from the chi-squared test is 0.001 which is less than 0.05, so we reject the null hypothesis by saying that, dying is dependent of sex.    
 
 ## Conclusions
 
 The question was if dying is depend of sex?  
-so, we conclude that yes, dying is dependent of sex.
+so, we conclude that yes, dying is dependent of sex as more males die as compared to the females in our analysis.  
