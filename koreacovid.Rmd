@@ -49,14 +49,33 @@ From this table, more females are alive then males, and the number of dead males
 
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
 
-
 ```{r}
-barchartGC(~Sex + result,data=kRdata)
-barchartGC(~Sex + result,data=kRdata, type="percent")
-
+dd2 <- kRdata %>% group_by(Sex,result) %>% summarize(count=n()) %>%
+mutate(prcnt=count/sum(count))
 ```
 
+
+# the group_by followed by summarize(count=n()) 
+
+```{r}
+basicC <- ggplot(dd2,aes(x=Sex,y=count,fill=result))
+basicC + geom_bar(stat="identity",position="dodge")
+```
+
+
+
+
 Based on this plot, the frequency of female alive is greater than that of the males alive, and the frequency of dead males is greater than that of females alive.      
+  
+# Now for percentage plot
+
+```{r}
+basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result))
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+  This chart shows that men survive covid19 nearly as often as women do. Even though it still shows
+that males die more often then females, but it isn't by much.  
   
   
 ## Numerical results
@@ -67,7 +86,10 @@ table1 <- xtabs(~Sex + result, data=kRdata)
 rowPerc(table1)
 colPerc(table1)
 ```
-From the numerical results, the number of dead males 3.0, and the number of dead females is 1.4. This implies that the number of dead males is greater then the number of dead females.    
+The table shows that females survive covid19 98.7% of the time, while men survive covid19 97% of
+the time. These numbers are very close for both males and females. Females die 1.4% of the time
+and males die 3% of the time when they contract covid19.  
+  
 
 ## Inferential results 
 
@@ -78,9 +100,13 @@ fisher.test(table1)
 ```
 
 
-from the table above, the P-value from the chi-squared test is 0.001 which is less than 0.05, so we reject the null hypothesis by saying that, dying is dependent of sex.    
+from the table above, the P-value from the chi-squared test is 0.001 which is less than 0.05, so we reject the null hypothesis by saying that, dying is dependent of sex.  
+. The fisher test gives us a p-value of 0.0000000004
+and an odds ratio of 2.3 making men 2.3 times more likely to die compared to females.  
 
 ## Conclusions
 
 The question was if dying is depend of sex?  
 so, we conclude that yes, dying is dependent of sex as more males die as compared to the females in our analysis.  
+Lastly we looked at the fisher test and it's p-value was 0.0000000004 and the odds
+ration of 2.3.  
