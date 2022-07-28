@@ -62,9 +62,6 @@ basicC <- ggplot(dd2,aes(x=Sex,y=count,fill=result))
 basicC + geom_bar(stat="identity",position="dodge")
 ```
 
-
-
-
 Based on this plot, the frequency of female alive is greater than that of the males alive, and the frequency of dead males is greater than that of females alive.      
   
 # Now for percentage plot
