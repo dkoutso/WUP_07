@@ -71,9 +71,8 @@ basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result))
 basicCC + geom_bar(stat="identity", position = "dodge")
 ```
 
-  This chart shows that men survive covid19 nearly as often as women do. Even though it still shows
-that males die more often then females, but it isn't by much.  
-  
+This chart shows that men survive covid19 nearly as often as women do. Even though it still shows
+that males die more often then females, but it isn't by much.    
   
 ## Numerical results
 
@@ -93,17 +92,21 @@ and males die 3% of the time when they contract covid19.
 ```{r}
 chisq.test(table1)
 chisqtestGC(table1)
-fisher.test(table1)
+#fisherXY(kRdata$Sex, kRdata$result)
 ```
 
+```{r}
+fisher.test(table(kRdata$Sex, kRdata$result))
+```
 
-from the table above, the P-value from the chi-squared test is 0.001 which is less than 0.05, so we reject the null hypothesis by saying that, dying is dependent of sex.  
-. The fisher test gives us a p-value of 0.0000000004
-and an odds ratio of 2.3 making men 2.3 times more likely to die compared to females.  
+The chi-square test above shows our p-value is 0.0012 which is less than 0.05. Since it is less
+than the 0.05 we reject the null hypothesis. The fisher test gives us a p-value of 0.0000000004
+and an odds ratio of 2.3 making men 2.3 times more likely to die compared to females.    
 
 ## Conclusions
 
-The question was if dying is depend of sex?  
-so, we conclude that yes, dying is dependent of sex as more males die as compared to the females in our analysis.  
-Lastly we looked at the fisher test and it's p-value was 0.0000000004 and the odds
+We investigated whether men and women are equally likely to die of covid19 from data collected in
+South Korea through May 2019. $H_O$: Dying is not dependent on sex and $H_A$: Dying is dependent
+on sex. We have a p-value of 0.0012 from our chi-squared test and therefore we reject the null
+hypothesis. Lastly we looked at the fisher test and it's p-value was 0.0000000004 and the odds
 ration of 2.3.  
