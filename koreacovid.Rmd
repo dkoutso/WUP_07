@@ -49,64 +49,38 @@ From this table, more females are alive then males, and the number of dead males
 
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
 
+
 ```{r}
-dd2 <- kRdata %>% group_by(Sex,result) %>% summarize(count=n()) %>%
-mutate(prcnt=count/sum(count))
+barchartGC(~result + Sex,data=kRdata)
+barchartGC(~result + Sex,data=kRdata, type="percent")
 ```
 
+  Based off of the first bar chart, men seem to be more susceptible to Coronacirus than women. Men have a higher death rate compared to women. Women have a higher alive rate compared to men.  Approximately, the frequency for men living is 750 lower than that of women. Based off of the second bar chart, women have a 55% survival rate while men have a 40% survival rate. Women have a higher survival rate by 15%. The death percentage for men is higher, as expected. Men death rate is at 60% while women death rate is at 45%. Men death rate is higher by 15%. 
 
-# the group_by followed by summarize(count=n()) 
 
-```{r}
-basicC <- ggplot(dd2,aes(x=Sex,y=count,fill=result))
-basicC + geom_bar(stat="identity",position="dodge")
-```
-
-Based on this plot, the frequency of female alive is greater than that of the males alive, and the frequency of dead males is greater than that of females alive.      
-  
-# Now for percentage plot
+## Numerical  Descriptive results
 
 ```{r}
-basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result))
-basicCC + geom_bar(stat="identity", position = "dodge")
-```
-
-This chart shows that men survive covid19 nearly as often as women do. Even though it still shows
-that males die more often then females, but it isn't by much.    
-  
-## Numerical results
-
-
-```{r}
-table1 <- xtabs(~Sex + result, data=kRdata)
+table1 <- xtabs(~result + Sex, data=kRdata)
 rowPerc(table1)
 colPerc(table1)
 ```
-The table shows that females survive covid19 98.7% of the time, while men survive covid19 97% of
-the time. These numbers are very close for both males and females. Females die 1.4% of the time
-and males die 3% of the time when they contract covid19.  
-  
+
+The data shows that 36 women  out of 100 people died out in the dead group. While 64 men out of 100 people died out in the dead group. More men are dying than women. Off of the percentages, women have a 98.7% survival rate while men ave a 97% survival rate. Women have a higher survival rate by 1.7%. Men have a higher death rate by 1.6% because 3 - 1.4 = 1.6. 
+
 
 ## Inferential results 
 
 ```{r}
 chisq.test(table1)
 chisqtestGC(table1)
-#fisherXY(kRdata$Sex, kRdata$result)
+fisher.test(table1)
 ```
 
-```{r}
-fisher.test(table(kRdata$Sex, kRdata$result))
-```
+The null hypothesis has to be rejected because the p-value is .001. The p-value is not greater than .05 so the likelihood of getting these exact results is way too low. The fisher exact table is also significant in showing that we reject the null hypothesis because the p-value is .0009. Both of our p-values for the chi-square test and the fisher exact test are lower than .05, so we reject the null hypotheses. The sample estimate states that our odds ratio is 2.3 to 1. Therefore, the odds are 2.3 to 1 that death is related to the two sexes differently. That there is a 2.3 to 1 odds ratio that there will end up being a difference between the death rate of the two sexes. Death and sex are dependent but results are different for male & female. We can reject the null hypothesis. 
 
-The chi-square test above shows our p-value is 0.0012 which is less than 0.05. Since it is less
-than the 0.05 we reject the null hypothesis. The fisher test gives us a p-value of 0.0000000004
-and an odds ratio of 2.3 making men 2.3 times more likely to die compared to females.    
 
 ## Conclusions
 
-We investigated whether men and women are equally likely to die of covid19 from data collected in
-South Korea through May 2019. $H_O$: Dying is not dependent on sex and $H_A$: Dying is dependent
-on sex. We have a p-value of 0.0012 from our chi-squared test and therefore we reject the null
-hypothesis. Lastly we looked at the fisher test and it's p-value was 0.0000000004 and the odds
-ration of 2.3.  
+The original question was if death was independent from sex. We can conclude that death isn't independent from sex. Dying is dependent on the sex. Our two bar charts, numerical data, inferential data, chi squared test, and the fisher's exact test all provide evidence towards my claim. Both p-values from the chi-squared test and the fisher's exact test are lower than .05. Thus, we have enough proof to reject the null hypotheses. Men have a higher likelihood of dying from Coronavirus compared to women. Women have a higher survival rate for Coronavirus compared to men. Those are my closing statements, thank you. 
+
